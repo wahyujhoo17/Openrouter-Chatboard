@@ -246,15 +246,15 @@ export default function Sidebar({
               <p className="text-[10px] font-semibold uppercase tracking-wider text-muted px-2 py-1.5">
                 {group.label}
               </p>
-              <div className="space-y-0.5">
+              <div className="space-y-1">
                 {group.items.map((conv) => (
                   <div
                     key={conv.id}
                     onMouseEnter={() => setHoveredId(conv.id)}
                     onMouseLeave={() => setHoveredId(null)}
-                    className={`group relative flex items-center gap-2 rounded-lg px-2 py-2 cursor-pointer transition-colors ${
+                    className={`group relative flex items-center gap-2 rounded-xl px-3 py-2 cursor-pointer transition-colors ${
                       activeConvId === conv.id
-                        ? "bg-[#1a1d2e] text-white"
+                        ? "bg-accent/20 text-current"
                         : "text-muted hover:bg-surface2 hover:text-current"
                     }`}
                     onClick={() => onSelectConversation(conv.id)}
@@ -386,7 +386,7 @@ export default function Sidebar({
       </div>
 
       {/* Bottom: user info or guest CTA */}
-      <div className="border-t border-[#1e2130] px-2 py-2.5 shrink-0">
+      <div className="px-2 py-3 shrink-0 bg-surface2 rounded-t-xl">
         {user ? (
           <>
             {/* Plan badge */}
@@ -395,7 +395,7 @@ export default function Sidebar({
                 className={`flex items-center gap-1.5 px-2 py-1.5 rounded-lg mb-2 ${
                   user.plan === "pro"
                     ? "bg-violet-500/10 border border-violet-500/20"
-                    : "bg-[#161926] border border-[#1e2130]"
+                    : "bg-surface border border-border"
                 }`}
               >
                 {user.plan === "pro" ? (
