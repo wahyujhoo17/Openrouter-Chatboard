@@ -43,16 +43,24 @@ export default function Home() {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
 
-  // Check theme preference
+  // Check theme preference. Default based on clock if no saved user preference.
   useEffect(() => {
     const saved = window.localStorage.getItem("ai-theme") as
       | "dark"
       | "light"
       | null;
+
+    const getClockTheme = () => {
+      const hour = new Date().getHours();
+      if (hour >= 7 && hour < 19) return "light" as const;
+      return "dark" as const;
+    };
+
     const system = window.matchMedia("(prefers-color-scheme: light)").matches
       ? "light"
       : "dark";
-    const initial = saved || system || "dark";
+
+    const initial = saved || getClockTheme() || system || "dark";
     setTheme(initial);
   }, []);
 
