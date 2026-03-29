@@ -1,0 +1,38 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment
+.env
+.env.*.local
+.env.local
+
+# OS
+.DS_Store
+
+# Logs
+logs/
+*.log
+
+# Editor/IDE
+.vscode/
+.idea/
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# Database
+*.sqlite
+*.sqlite3
+database/*.db
+
+# Misc
+coverage/
+.cache/
+*.pid
