@@ -41,8 +41,12 @@ export default function RegisterPage() {
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500 to-blue-600 flex items-center justify-center text-white text-lg font-bold shadow-lg shadow-violet-900/40 mb-4">
-            AI
+          <div className="w-24 h-24 rounded-2xl flex items-center justify-center mb-4">
+            <img
+              src="/img/logo1.png"
+              alt="LumiCloud"
+              className="w-20 h-20 object-contain"
+            />
           </div>
           <h1 className="text-2xl font-bold text-current">Create an account</h1>
           <p className="text-sm text-muted mt-1">
