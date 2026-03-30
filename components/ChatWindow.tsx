@@ -45,8 +45,12 @@ export default function ChatWindow({ messages, isLoading }: Props) {
   if (messages.length === 0 && !isLoading) {
     return (
       <div className="flex-1 flex flex-col items-center justify-center text-center px-6 overflow-y-auto">
-        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-blue-600 flex items-center justify-center text-white text-xl font-bold mb-5 shadow-lg shadow-violet-900/30">
-          AI
+        <div className="w-20 h-20 rounded-2xl flex items-center justify-center mb-5">
+          <img
+            src="/img/logo1.png"
+            alt="LumiCloud"
+            className="w-16 h-16 object-contain"
+          />
         </div>
         <h2 className="text-xl font-semibold text-current mb-2">
           How can I help you today?
