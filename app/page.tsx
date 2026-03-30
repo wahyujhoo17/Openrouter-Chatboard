@@ -291,7 +291,62 @@ export default function Home() {
         {/* Header */}
         <header className="flex items-center gap-3 px-4 py-2.5 border-b border-surface shrink-0 bg-surface">
           <div className="flex items-center gap-2">
-            {/* header brand removed per user request */}
+            <button
+              onClick={() => setSidebarCollapsed((prev) => !prev)}
+              className="p-2 rounded-lg hover:bg-surface2 text-muted hover:text-current transition-all"
+              aria-label={
+                sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"
+              }
+            >
+              {sidebarCollapsed ? (
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M13 17l5-5-5-5" />
+                  <path d="M6 17l5-5-5-5" />
+                </svg>
+              ) : (
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M11 17l-5-5 5-5" />
+                  <path d="M18 17l-5-5 5-5" />
+                </svg>
+              )}
+            </button>
+
+            <button
+              onClick={() => setMobileSidebarOpen((prev) => !prev)}
+              className="p-2 rounded-lg hover:bg-surface2 text-muted hover:text-current transition-all md:hidden"
+              aria-label="Toggle mobile sidebar"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M3 12h18M3 6h18M3 18h18" />
+              </svg>
+            </button>
           </div>
 
           <div className="flex-1 flex justify-center">

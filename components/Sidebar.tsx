@@ -100,48 +100,19 @@ export default function Sidebar({
         className={`flex items-center border-b border-surface shrink-0 h-[52px] ${collapsed ? "justify-center px-2" : "justify-between px-3"}`}
         style={{ background: "var(--surface)" }}
       >
-        {!collapsed && (
-          <div className="flex items-center gap-2 min-w-0">
-            <span className="text-sm font-semibold text-current truncate">
-              AI Chatboard
-            </span>
-          </div>
-        )}
-        <button
-          onClick={onToggleCollapse}
-          className="p-2 rounded-lg hover:bg-surface2 text-muted hover:text-current transition-colors shrink-0"
-          title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-        >
-          {collapsed ? (
-            <svg
-              width="15"
-              height="15"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M13 17l5-5-5-5" />
-              <path d="M6 17l5-5-5-5" />
-            </svg>
-          ) : (
-            <svg
-              width="15"
-              height="15"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M11 17l-5-5 5-5" />
-              <path d="M18 17l-5-5 5-5" />
-            </svg>
-          )}
-        </button>
+        <div className="flex items-center gap-2 min-w-0">
+          <img
+            src={collapsed ? "/img/logo1.png" : "/img/logo.png"}
+            alt="LumiCloud"
+            className="object-contain"
+            style={{
+              width: collapsed ? "80px" : "100px",
+              height: collapsed ? "80px" : "100px",
+              maxWidth: "100%",
+              maxHeight: "100%",
+            }}
+          />
+        </div>
       </div>
 
       {/* New Chat */}
