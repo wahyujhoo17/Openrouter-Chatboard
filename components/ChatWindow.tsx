@@ -181,9 +181,9 @@ export default function ChatWindow({ messages, isLoading }: Props) {
               {/* removed Assistant label */}
             </div>
             <div className="flex items-center gap-1.5 px-4 py-3 bg-surface2 rounded-2xl rounded-tl-sm border border-border">
-              <div className="w-2 h-2 rounded-full bg-accent typing-dot" />
-              <div className="w-2 h-2 rounded-full bg-accent typing-dot" />
-              <div className="w-2 h-2 rounded-full bg-accent typing-dot" />
+              <div className="w-2 h-2 rounded-full bg-[var(--accent)] typing-dot" />
+              <div className="w-2 h-2 rounded-full bg-[var(--accent)] typing-dot" />
+              <div className="w-2 h-2 rounded-full bg-[var(--accent)] typing-dot" />
             </div>
           </div>
         </div>

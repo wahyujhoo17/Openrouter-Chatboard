@@ -219,13 +219,13 @@ export default function Sidebar({
         {/* Logged-in: conversation groups */}
         {user && !collapsed && groups.length === 0 && (
           <div className="flex flex-col items-center justify-center py-10 px-4 text-center">
-            <div className="w-10 h-10 rounded-xl bg-[#161926] border border-[#1e2130] flex items-center justify-center mb-3">
+            <div className="w-10 h-10 rounded-xl bg-surface2 border border-border flex items-center justify-center mb-3">
               <svg
                 width="18"
                 height="18"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="#374151"
+                stroke="var(--muted)"
                 strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -274,7 +274,7 @@ export default function Sidebar({
                     </svg>
                     <div className="flex-1 min-w-0">
                       <p className="text-xs truncate">{conv.title}</p>
-                      <p className="text-[10px] text-[#374151] mt-0.5">
+                      <p className="text-[10px] text-muted mt-0.5">
                         {timeAgo(conv.updated_at)}
                       </p>
                     </div>
@@ -282,7 +282,7 @@ export default function Sidebar({
                       <button
                         onClick={(e) => handleDelete(e, conv.id)}
                         disabled={deletingId === conv.id}
-                        className="shrink-0 p-1 rounded-md hover:bg-red-500/20 text-[#4a5568] hover:text-red-400 transition-colors"
+                        className="shrink-0 p-1 rounded-md hover:bg-red-500/20 text-muted hover:text-red-400 transition-colors"
                         title="Delete"
                       >
                         {deletingId === conv.id ? (
@@ -341,8 +341,8 @@ export default function Sidebar({
               title={conv.title}
               className={`w-full flex justify-center p-2.5 rounded-lg mb-0.5 transition-colors ${
                 activeConvId === conv.id
-                  ? "bg-[#1a1d2e] text-white"
-                  : "text-[#4a5568] hover:bg-[#161926] hover:text-[#64748b]"
+                  ? "bg-accent/20 text-current"
+                  : "text-muted hover:bg-surface2 hover:text-current"
               }`}
             >
               <svg
@@ -365,7 +365,7 @@ export default function Sidebar({
           <Link
             href="/login"
             title="Sign in"
-            className="w-full flex justify-center p-2.5 rounded-lg text-[#818cf8] hover:bg-[#161926] transition-colors"
+            className="w-full flex justify-center p-2.5 rounded-lg text-accent hover:bg-surface2 transition-colors"
           >
             <svg
               width="14"
@@ -404,7 +404,8 @@ export default function Sidebar({
                       width="10"
                       height="10"
                       viewBox="0 0 24 24"
-                      fill="#a78bfa"
+                      fill="currentColor"
+                      className="text-violet-300"
                     >
                       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                     </svg>
@@ -414,10 +415,8 @@ export default function Sidebar({
                   </>
                 ) : (
                   <>
-                    <span className="text-[10px] text-[#4a5568]">
-                      Free Plan
-                    </span>
-                    <span className="text-[10px] text-[#374151] mx-1">·</span>
+                    <span className="text-[10px] text-muted">Free Plan</span>
+                    <span className="text-[10px] text-muted mx-1">·</span>
                     <span className="text-[10px] text-violet-400 font-medium cursor-pointer hover:text-violet-300">
                       Upgrade ↗
                     </span>
@@ -445,7 +444,7 @@ export default function Sidebar({
                   <button
                     onClick={onLogout}
                     title="Sign out"
-                    className="p-1.5 rounded-lg hover:bg-[#1e2130] text-[#4a5568] hover:text-[#94a3b8] transition-colors shrink-0"
+                    className="p-1.5 rounded-lg hover:bg-surface2 text-muted hover:text-current transition-colors shrink-0"
                   >
                     <svg
                       width="14"
@@ -497,7 +496,7 @@ export default function Sidebar({
           </div>
         ) : (
           <div className="flex justify-center">
-            <div className="w-8 h-8 rounded-full bg-[#1e2130] border border-[#2a2d3e] flex items-center justify-center text-[#4a5568]">
+            <div className="w-8 h-8 rounded-full bg-surface2 border border-border flex items-center justify-center text-muted">
               <svg
                 width="14"
                 height="14"

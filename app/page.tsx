@@ -252,10 +252,10 @@ export default function Home() {
 
   if (user === "loading") {
     return (
-      <div className="h-full flex items-center justify-center bg-[#0d0f18]">
+      <div className="h-full flex items-center justify-center bg-app">
         <div className="flex flex-col items-center gap-3">
           <div className="w-10 h-10 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-[#64748b]">Loading...</p>
+          <p className="text-sm text-muted">Loading...</p>
         </div>
       </div>
     );
@@ -314,7 +314,7 @@ export default function Home() {
               className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[10px] font-semibold ${
                 loggedInUser.plan === "pro"
                   ? "bg-violet-500/10 border-violet-500/30 text-violet-300"
-                  : "bg-[#1e2130] border-[#2a2d3e] text-[#64748b]"
+                  : "bg-surface2 border-border text-muted"
               }`}
             >
               {loggedInUser.plan === "pro" && (

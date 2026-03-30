@@ -68,7 +68,8 @@ export default function ChatInput({ onSend, isLoading }: Props) {
                   : "var(--accent)",
               borderColor:
                 !value.trim() || isLoading ? "var(--border)" : "transparent",
-              color: !value.trim() || isLoading ? "var(--muted)" : "#ffffff",
+              color:
+                !value.trim() || isLoading ? "var(--muted)" : "var(--text)",
             }}
             className="shrink-0 w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-150 shadow-md disabled:shadow-none"
             title="Send (Enter)"
