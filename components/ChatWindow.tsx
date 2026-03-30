@@ -95,7 +95,7 @@ export default function ChatWindow({ messages, isLoading }: Props) {
               className={
                 msg.role === "user"
                   ? "bg-gradient-to-br from-violet-600 to-blue-600 text-white px-4 py-3 rounded-2xl rounded-tr-sm shadow-md text-sm leading-relaxed"
-                  : "bg-surface2 text-current px-4 py-3 rounded-2xl rounded-tr-sm shadow-sm text-sm leading-relaxed"
+                  : "bg-surface text-current px-4 py-3 rounded-2xl rounded-tr-sm border border-border shadow-sm text-sm leading-relaxed"
               }
             >
               {msg.role === "user" ? (
