@@ -12,6 +12,7 @@ export interface Message {
   id: string;
   role: "user" | "assistant";
   content: string;
+  attachmentUrl?: string;
   created_at?: string;
 }
 
@@ -156,13 +157,14 @@ export default function Home() {
   );
 
   const handleSend = useCallback(
-    async (text: string) => {
-      if (!text.trim() || isLoading) return;
+    async (text: string, attachmentUrl?: string) => {
+      if ((!text.trim() && !attachmentUrl) || isLoading) return;
 
       const userMsg: Message = {
         id: Date.now().toString(),
         role: "user",
         content: text,
+        attachmentUrl,
       };
       setMessages((prev) => [...prev, userMsg]);
       setIsLoading(true);
@@ -177,6 +179,7 @@ export default function Home() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             message: text,
+            attachmentUrl,
             history,
             model: selectedModel,
             conversationId: activeConvId,

@@ -3,12 +3,15 @@
 import { useState, useRef, useEffect } from "react";
 
 interface Props {
-  onSend: (text: string) => void;
+  onSend: (text: string, attachmentUrl?: string) => void;
   isLoading: boolean;
 }
 
 export default function ChatInput({ onSend, isLoading }: Props) {
   const [value, setValue] = useState("");
+  const [file, setFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string>("");
+  const [uploading, setUploading] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -31,11 +34,44 @@ export default function ChatInput({ onSend, isLoading }: Props) {
     }
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     const text = value.trim();
-    if (!text || isLoading) return;
-    onSend(text);
+    if ((!text && !file) || isLoading || uploading) return;
+
+    let attachmentUrl: string | undefined;
+    if (file) {
+      try {
+        setUploading(true);
+        const formData = new FormData();
+        formData.append("file", file);
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+        const data = await res.json();
+        if (res.ok && data.url) {
+          attachmentUrl = data.url;
+        } else {
+          console.error("Upload failed", data);
+        }
+      } catch (err) {
+        console.error("Upload error", err);
+      } finally {
+        setUploading(false);
+      }
+    }
+
+    let message = text;
+    if (attachmentUrl) {
+      message = `${message}\n
+[Attached file](${attachmentUrl})`;
+    }
+
+    onSend(message, attachmentUrl);
+
     setValue("");
+    setFile(null);
+    setPreviewUrl("");
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
     }
@@ -44,7 +80,32 @@ export default function ChatInput({ onSend, isLoading }: Props) {
   return (
     <div className="shrink-0 px-4 pb-4 pt-2 border-t border-surface">
       <div className="max-w-3xl mx-auto">
-        <div className="relative flex items-end gap-2 bg-surface2 border border-surface2 rounded-2xl px-4 py-3 focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/30 transition-all">
+        <div className="flex items-start gap-2 bg-surface2 border border-surface2 rounded-2xl px-2 py-2 focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/30 transition-all">
+          <label
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface hover:bg-surface2 cursor-pointer transition-colors"
+            title="Upload file"
+          >
+            <input
+              type="file"
+              accept="image/*,.txt,.pdf"
+              className="hidden"
+              onChange={(e) => {
+                const selected = e.target.files?.[0] || null;
+                setFile(selected);
+                if (selected && selected.type.startsWith("image/")) {
+                  setPreviewUrl(URL.createObjectURL(selected));
+                } else {
+                  setPreviewUrl("");
+                }
+              }}
+            />
+            <img
+              src="/img/paper-clip.svg"
+              alt="Clip"
+              className="h-4 w-4"
+              style={{ width: "16px", height: "16px" }}
+            />
+          </label>
           <textarea
             ref={textareaRef}
             value={value}
@@ -60,18 +121,22 @@ export default function ChatInput({ onSend, isLoading }: Props) {
           />
           <button
             onClick={handleSubmit}
-            disabled={!value.trim() || isLoading}
+            disabled={(!value.trim() && !file) || isLoading || uploading}
             style={{
               backgroundColor:
-                !value.trim() || isLoading
+                (!value.trim() && !file) || isLoading || uploading
                   ? "var(--surface2)"
                   : "var(--accent)",
               borderColor:
-                !value.trim() || isLoading ? "var(--border)" : "transparent",
+                (!value.trim() && !file) || isLoading || uploading
+                  ? "var(--border)"
+                  : "transparent",
               color:
-                !value.trim() || isLoading ? "var(--muted)" : "var(--text)",
+                (!value.trim() && !file) || isLoading || uploading
+                  ? "var(--muted)"
+                  : "var(--text)",
             }}
-            className="shrink-0 w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-150 shadow-md disabled:shadow-none"
+            className="shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-150 shadow-md disabled:shadow-none"
             title="Send (Enter)"
           >
             {isLoading ? (
@@ -111,17 +176,43 @@ export default function ChatInput({ onSend, isLoading }: Props) {
             )}
           </button>
         </div>
-        <p className="text-center text-[10px] text-muted mt-2">
-          Press{" "}
-          <kbd className="font-mono bg-surface2 px-1 py-0.5 rounded text-muted">
-            Enter
-          </kbd>{" "}
-          to send ·{" "}
-          <kbd className="font-mono bg-surface2 px-1 py-0.5 rounded text-muted">
-            Shift+Enter
-          </kbd>{" "}
-          for new line
-        </p>
+        <div className="mt-2 text-xs text-muted">
+          {file && (
+            <div className="flex items-center justify-between p-2 border border-surface2 rounded-lg bg-surface2">
+              <span className="truncate">{file.name}</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setFile(null);
+                  setPreviewUrl("");
+                }}
+                className="text-[10px] text-accent underline"
+              >
+                Remove
+              </button>
+            </div>
+          )}
+
+          {previewUrl && (
+            <img
+              src={previewUrl}
+              alt="preview"
+              className="mt-2 rounded max-h-28 w-auto"
+            />
+          )}
+
+          <p className="mt-2 text-center text-[10px] text-muted">
+            Press{" "}
+            <kbd className="font-mono bg-surface2 px-1 py-0.5 rounded text-muted">
+              Enter
+            </kbd>{" "}
+            to send ·{" "}
+            <kbd className="font-mono bg-surface2 px-1 py-0.5 rounded text-muted">
+              Shift+Enter
+            </kbd>{" "}
+            for new line
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -99,9 +99,30 @@ export default function ChatWindow({ messages, isLoading }: Props) {
               }
             >
               {msg.role === "user" ? (
-                <p className="whitespace-pre-wrap leading-relaxed">
-                  {msg.content}
-                </p>
+                <>
+                  <p className="whitespace-pre-wrap leading-relaxed">
+                    {msg.content}
+                  </p>
+                  {msg.attachmentUrl && (
+                    <div className="mt-2 border border-border rounded-lg p-2 bg-surface2">
+                      <a
+                        href={msg.attachmentUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-xs font-semibold text-accent underline"
+                      >
+                        Open attachment
+                      </a>
+                      {msg.attachmentUrl.match(/\.(png|jpe?g|gif|webp)$/i) && (
+                        <img
+                          src={msg.attachmentUrl}
+                          alt="attachment"
+                          className="mt-1 w-full max-h-40 object-contain rounded"
+                        />
+                      )}
+                    </div>
+                  )}
+                </>
               ) : (
                 <div className="prose-chat">
                   <ReactMarkdown
