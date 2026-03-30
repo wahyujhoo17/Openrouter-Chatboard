@@ -75,7 +75,7 @@ export const MODELS: AIModel[] = [
   {
     id: "openrouter/free",
     name: "Auto",
-    provider: "OpenRouter",
+    provider: "Lumicloud",
     description:
       "Auto model routing mode for free users, selecting the best available backend model automatically.",
     plan: "free",

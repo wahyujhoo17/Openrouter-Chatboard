@@ -29,14 +29,14 @@ const PROVIDER_ICONS: Record<string, string> = {
 };
 
 const MONTH_LABELS: Record<string, string> = {
-  "2026-03": "Maret 2026",
-  "2026-02": "Februari 2026",
-  "2026-01": "Januari 2026",
-  "2025-12": "Desember 2025",
+  "2026-03": "March 2026",
+  "2026-02": "February 2026",
+  "2026-01": "January 2026",
+  "2025-12": "December 2025",
   "2025-11": "November 2025",
-  "2025-10": "Oktober 2025",
+  "2025-10": "October 2025",
   "2025-09": "September 2025",
-  "2025-08": "Agustus 2025",
+  "2025-08": "August 2025",
 };
 
 export default function ModelSelector({
@@ -173,7 +173,7 @@ export default function ModelSelector({
                   ref={searchRef}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Cari model..."
+                  placeholder="Search models..."
                   className="bg-transparent text-xs text-current placeholder-muted outline-none w-full"
                 />
                 {search && (
@@ -257,7 +257,7 @@ export default function ModelSelector({
 
               {grouped.length === 0 ? (
                 <div className="text-center py-8 text-muted text-xs">
-                  Tidak ada model ditemukan
+                  No models found
                 </div>
               ) : (
                 grouped.map(([monthKey, models]) => (
@@ -414,7 +414,7 @@ export default function ModelSelector({
               {preview.plan === "pro" && (isGuest || userPlan === "free") ? (
                 <div className="space-y-2">
                   <p className="text-[10px] text-violet-300">
-                    Model Pro memerlukan akun & langganan berbayar.
+                    Pro models require an account & paid subscription.
                   </p>
                   {isGuest && (
                     <button
@@ -424,7 +424,7 @@ export default function ModelSelector({
                       }}
                       className="w-full text-xs font-semibold py-2 rounded-lg bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white transition-all"
                     >
-                      Login untuk unlock Pro
+                      Login to unlock Pro
                     </button>
                   )}
                 </div>
@@ -433,11 +433,11 @@ export default function ModelSelector({
                   onClick={() => selectModel(preview)}
                   className="w-full text-xs font-semibold py-2 rounded-lg bg-surface2 border border-accent/40 hover:bg-accent/20 text-accent hover:text-white transition-all"
                 >
-                  Pilih model ini
+                  Select this model
                 </button>
               ) : (
                 <div className="w-full text-xs font-semibold py-2 rounded-lg bg-accent/15 border border-accent/30 text-accent text-center">
-                  ✓ Sedang digunakan
+                  ✓ Currently selected
                 </div>
               )}
             </div>
