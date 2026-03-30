@@ -37,6 +37,18 @@ export const MODELS: AIModel[] = [
     tags: ["fast", "agentic"],
   },
   {
+    id: "nvidia/nemotron-nano-12b-v2-vl:free",
+    name: "Nemotron Nano 12B v2 VL",
+    provider: "NVIDIA",
+    description:
+      "Improved Nemotron Nano 12B with Vision+Language capability and enhanced efficiency.",
+    plan: "free",
+    contextWindow: "256K",
+    badge: "Free",
+    releaseDate: "2026-03",
+    tags: ["vision", "reasoning", "fast"],
+  },
+  {
     id: "qwen/qwen3-coder:free",
     name: "Qwen3 Coder 480B",
     provider: "Alibaba",
@@ -59,6 +71,18 @@ export const MODELS: AIModel[] = [
     badge: "Free",
     releaseDate: "2026-03",
     tags: ["chat", "fast"],
+  },
+  {
+    id: "openrouter/free",
+    name: "Auto",
+    provider: "OpenRouter",
+    description:
+      "Auto model routing mode for free users, selecting the best available backend model automatically.",
+    plan: "free",
+    contextWindow: "16K",
+    badge: "Free",
+    releaseDate: "2026-03",
+    tags: ["chat", "api", "free"],
   },
   {
     id: "openai/gpt-4o",
@@ -801,7 +825,7 @@ export const MODELS: AIModel[] = [
   },
 ];
 
-export const DEFAULT_FREE_MODEL = "openai/gpt-oss-120b:free";
+export const DEFAULT_FREE_MODEL = "openrouter/free";
 export const DEFAULT_PRO_MODEL = "openai/gpt-4o-mini";
 
 export function getDefaultModel(plan: "free" | "pro"): string {

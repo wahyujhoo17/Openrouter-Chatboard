@@ -12,19 +12,20 @@ interface Props {
 }
 
 const PROVIDER_ICONS: Record<string, string> = {
-  OpenAI: "🟢",
-  Anthropic: "🟠",
-  Google: "🔵",
-  Meta: "🟣",
-  "Mistral AI": "🔴",
-  Alibaba: "🟡",
-  Microsoft: "⚪",
-  NVIDIA: "🟩",
-  DeepSeek: "🔷",
-  StepFun: "🟤",
-  "Arcee AI": "🩵",
-  MiniMax: "🟪",
-  "Nous Research": "🔶",
+  OpenAI: "OA",
+  Anthropic: "AN",
+  Google: "GO",
+  Meta: "ME",
+  "Mistral AI": "MI",
+  Alibaba: "AL",
+  Microsoft: "MS",
+  NVIDIA: "NV",
+  DeepSeek: "DS",
+  StepFun: "SF",
+  "Arcee AI": "AR",
+  MiniMax: "MM",
+  "Nous Research": "NR",
+  OpenRouter: "AU",
 };
 
 const MONTH_LABELS: Record<string, string> = {
@@ -75,6 +76,7 @@ export default function ModelSelector({
 
   const filtered = useMemo(() => {
     return MODELS.filter((m) => {
+      if (m.id === "openrouter/free") return false; // handled separately on top
       if (freeOnly && m.plan !== "free") return false;
       if (search) {
         const q = search.toLowerCase();
@@ -87,6 +89,8 @@ export default function ModelSelector({
       return true;
     });
   }, [search, freeOnly]);
+
+  const autoModel = MODELS.find((m) => m.id === "openrouter/free");
 
   const grouped = useMemo(() => {
     const map = new Map<string, AIModel[]>();
@@ -121,8 +125,9 @@ export default function ModelSelector({
         onClick={() => setOpen((p) => !p)}
         className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface2 border border-surface2 hover:border-accent/50 text-current hover:text-white text-xs font-medium transition-all"
       >
-        <span className="text-sm">
-          {PROVIDER_ICONS[current.provider] || "🤖"}
+        <span className="text-sm font-semibold tracking-wider">
+          {PROVIDER_ICONS[current.provider] ||
+            current.provider.slice(0, 2).toUpperCase()}
         </span>
         <span className="max-w-[130px] truncate">{current.name}</span>
         <svg
@@ -226,6 +231,30 @@ export default function ModelSelector({
               className="overflow-y-auto flex-1 px-2 pb-2"
               style={{ maxHeight: 380 }}
             >
+              {autoModel && (
+                <button
+                  key={autoModel.id}
+                  onClick={() => selectModel(autoModel)}
+                  onMouseEnter={() => setHovered(autoModel)}
+                  onMouseLeave={() => setHovered(null)}
+                  className={`w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-left transition-all mb-1 ${
+                    selectedModel === autoModel.id
+                      ? "bg-surface2 border border-accent/40"
+                      : ""
+                  }`}
+                >
+                  <span className="text-sm shrink-0">
+                    {PROVIDER_ICONS[autoModel.provider] || "⚙️"}
+                  </span>
+                  <span className="flex-1 min-w-0 text-xs font-medium text-current truncate">
+                    {autoModel.name}
+                  </span>
+                  <span className="text-[9px] bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 px-1.5 py-0.5 rounded-full font-semibold">
+                    Free
+                  </span>
+                </button>
+              )}
+
               {grouped.length === 0 ? (
                 <div className="text-center py-8 text-muted text-xs">
                   Tidak ada model ditemukan
@@ -256,8 +285,9 @@ export default function ModelSelector({
                                 : ""
                           } ${locked ? "opacity-50" : ""}`}
                         >
-                          <span className="text-sm shrink-0">
-                            {PROVIDER_ICONS[model.provider] || "🤖"}
+                          <span className="text-sm font-semibold shrink-0">
+                            {PROVIDER_ICONS[model.provider] ||
+                              model.provider.slice(0, 2).toUpperCase()}
                           </span>
                           <span className="flex-1 min-w-0 text-xs font-medium text-current truncate">
                             {model.name}
