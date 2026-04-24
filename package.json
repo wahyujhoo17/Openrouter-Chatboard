@@ -28,7 +28,7 @@
     "remark-gfm": "^4.0.0"
   },
   "devDependencies": {
-    "@prisma/cli": "^5.16.0",
+    "prisma": "^5.16.0",
     "@types/node": "^20",
     "@types/pg": "^8.11.0",
     "@types/react": "^18",

@@ -1,6 +1,4 @@
-import type { PrismaConfig } from "@prisma/client";
-
-const config: PrismaConfig = {
+const config = {
   datasources: {
     db: {
       provider: "postgresql",

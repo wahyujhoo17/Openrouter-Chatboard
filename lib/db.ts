@@ -10,6 +10,10 @@ export type User = {
   updated_at: string;
 };
 
+function toPublicPlan(plan: "FREE" | "PRO"): "free" | "pro" {
+  return plan === "FREE" ? "free" : "pro";
+}
+
 export type Conversation = {
   id: number;
   user_id: number;
@@ -43,6 +47,7 @@ export async function createUser(
   });
   return {
     ...user,
+    plan: toPublicPlan(user.plan),
     password_hash: user.passwordHash,
     created_at: user.createdAt.toISOString(),
     updated_at: user.updatedAt.toISOString(),
@@ -54,6 +59,7 @@ export async function getUserByEmail(email: string): Promise<User | null> {
   if (!user) return null;
   return {
     ...user,
+    plan: toPublicPlan(user.plan),
     password_hash: user.passwordHash,
     created_at: user.createdAt.toISOString(),
     updated_at: user.updatedAt.toISOString(),
@@ -65,6 +71,7 @@ export async function getUserById(id: number): Promise<User | null> {
   if (!user) return null;
   return {
     ...user,
+    plan: toPublicPlan(user.plan),
     password_hash: user.passwordHash,
     created_at: user.createdAt.toISOString(),
     updated_at: user.updatedAt.toISOString(),
@@ -98,7 +105,7 @@ export async function getConversationsByUser(
     include: { messages: true },
     take: 60,
   });
-  return conversations.map((conv) => ({
+  return conversations.map((conv: any) => ({
     ...conv,
     user_id: conv.userId,
     created_at: conv.createdAt.toISOString(),
@@ -174,7 +181,7 @@ export async function getMessages(
     orderBy: { createdAt: "asc" },
     take: limit,
   });
-  return messages.map((m) => ({
+  return messages.map((m: any) => ({
     ...m,
     conversation_id: m.conversationId,
     created_at: m.createdAt.toISOString(),
